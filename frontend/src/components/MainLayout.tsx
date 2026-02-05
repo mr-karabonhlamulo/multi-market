@@ -1,0 +1,56 @@
+import React from 'react';
+import { useTheme } from '../contexts/ThemeContext';
+import { Link, Outlet } from 'react-router-dom';
+import { ShoppingBag, User, LayoutDashboard, Sun, Moon } from 'lucide-react';
+
+export default function MainLayout() {
+    const { theme, toggleTheme } = useTheme();
+
+    return (
+        <div className={`min-h-screen transition-colors duration-500 ${theme === 'royal' ? 'bg-royal-900 text-slate-100' : 'bg-nude-100 text-nude-900'
+            }`}>
+            {/* Navbar */}
+            <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${theme === 'royal' ? 'bg-royal-900/80 border-b border-white/5' : 'bg-nude-100/80 border-b border-nude-900/5'
+                } backdrop-blur-md`}>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between items-center h-16">
+                        <Link to="/" className="text-2xl font-serif font-bold tracking-tighter">
+                            Perfume<span className={theme === 'royal' ? 'text-royal-accent' : 'text-nude-400'}>Co.</span>
+                        </Link>
+
+                        <div className="hidden md:flex space-x-8 items-center">
+                            <Link to="/" className="hover:opacity-75 transition">Shop</Link>
+                            <Link to="/partner" className="hover:opacity-75 transition">Partner Portal</Link>
+
+                            <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-white/10 transition">
+                                {theme === 'royal' ? <Sun size={20} /> : <Moon size={20} />}
+                            </button>
+
+                            <Link to="/cart" className="relative p-2">
+                                <ShoppingBag size={20} />
+                                <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 rounded-full text-[10px] flex items-center justify-center">0</span>
+                            </Link>
+
+                            <Link to="/login" className={`px-4 py-2 rounded-lg font-medium transition ${theme === 'royal'
+                                    ? 'bg-royal-accent hover:bg-royal-accent/90 text-white shadow-[0_0_15px_rgba(99,102,241,0.5)]'
+                                    : 'bg-nude-900 text-nude-50 hover:bg-nude-900/90 shadow-lg'
+                                }`}>
+                                Login
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            {/* Main Content */}
+            <main className="pt-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[calc(100vh-100px)]">
+                <Outlet />
+            </main>
+
+            {/* Footer */}
+            <footer className={`py-8 text-center text-sm ${theme === 'royal' ? 'text-slate-500' : 'text-nude-400'}`}>
+                <p>Designed & Created by @MrKaraboNhlamulo, All rights reserved</p>
+            </footer>
+        </div>
+    );
+}
