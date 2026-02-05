@@ -1,10 +1,12 @@
 import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
+import { useCart } from '../contexts/CartContext';
 import { Link, Outlet } from 'react-router-dom';
 import { ShoppingBag, User, LayoutDashboard, Sun, Moon } from 'lucide-react';
 
 export default function MainLayout() {
     const { theme, toggleTheme } = useTheme();
+    const { itemCount } = useCart();
 
     return (
         <div className={`min-h-screen transition-colors duration-500 ${theme === 'royal' ? 'bg-royal-900 text-slate-100' : 'bg-nude-100 text-nude-900'
@@ -28,12 +30,12 @@ export default function MainLayout() {
 
                             <Link to="/cart" className="relative p-2">
                                 <ShoppingBag size={20} />
-                                <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 rounded-full text-[10px] flex items-center justify-center">0</span>
+                                {itemCount > 0 && <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 rounded-full text-[10px] flex items-center justify-center font-bold">{itemCount}</span>}
                             </Link>
 
                             <Link to="/login" className={`px-4 py-2 rounded-lg font-medium transition ${theme === 'royal'
-                                    ? 'bg-royal-accent hover:bg-royal-accent/90 text-white shadow-[0_0_15px_rgba(99,102,241,0.5)]'
-                                    : 'bg-nude-900 text-nude-50 hover:bg-nude-900/90 shadow-lg'
+                                ? 'bg-royal-accent hover:bg-royal-accent/90 text-white shadow-[0_0_15px_rgba(99,102,241,0.5)]'
+                                : 'bg-nude-900 text-nude-50 hover:bg-nude-900/90 shadow-lg'
                                 }`}>
                                 Login
                             </Link>

@@ -5,11 +5,10 @@ import HomePage from './pages/HomePage';
 import PartnerDashboard from './pages/PartnerDashboard';
 import LoginPage from './pages/LoginPage';
 import ProductDetailPage from './pages/ProductDetailPage';
+import CartPage from './pages/CartPage';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-
 import { CartProvider } from './contexts/CartContext';
-import CartPage from './pages/CartPage';
 
 // Protected Route Wrapper
 const ProtectedRoute = () => {
@@ -37,15 +36,12 @@ function App() {
                                 <Route element={<ProtectedRoute />}>
                                     <Route path="partner" element={<PartnerDashboard />} />
                                 </Route>
-
-                                <Route path="cart" element={<div className="p-10 text-center">Cart Placeholder</div>} />
                             </Route>
                         </Routes>
-                    </Routes>
-                </BrowserRouter>
-            </CartProvider>
-        </AuthProvider>
-        </ThemeProvider >
+                    </BrowserRouter>
+                </CartProvider>
+            </AuthProvider>
+        </ThemeProvider>
     );
 }
 
