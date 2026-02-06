@@ -18,15 +18,15 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [items, setItems] = useState<CartItem[]>([]);
-
-    // Load cart from local storage on mount
-    useEffect(() => {
-        const savedCart = localStorage.getItem('cart');
-        if (savedCart) {
-            setItems(JSON.parse(savedCart));
+    const [items, setItems] = useState<CartItem[]>(() => {
+        try {
+            const savedCart = localStorage.getItem('cart');
+            return savedCart ? JSON.parse(savedCart) : [];
+        } catch (error) {
+            console.error("Failed to load cart from localStorage", error);
+            return [];
         }
-    }, []);
+    });
 
     // Save cart to local storage whenever it changes
     useEffect(() => {
