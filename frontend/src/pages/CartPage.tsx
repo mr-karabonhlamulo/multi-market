@@ -84,12 +84,12 @@ export default function CartPage() {
                         </span>
                     </div>
 
-                    <button className={`w-full py-4 rounded-xl font-bold text-lg shadow-xl flex items-center justify-center gap-2 transition transform hover:scale-[1.02] ${theme === 'royal'
-                            ? 'bg-indigo-600 hover:bg-indigo-500 shadow-indigo-500/20 text-white'
-                            : 'bg-nude-900 hover:bg-nude-800 text-nude-50'
+                    <Link to="/checkout" className={`w-full py-4 rounded-xl font-bold text-lg shadow-xl flex items-center justify-center gap-2 transition transform hover:scale-[1.02] ${theme === 'royal'
+                        ? 'bg-indigo-600 hover:bg-indigo-500 shadow-indigo-500/20 text-white'
+                        : 'bg-nude-900 hover:bg-nude-800 text-nude-50'
                         }`}>
                         Proceed to Checkout <ArrowRight size={20} />
-                    </button>
+                    </Link>
                     <p className="text-center text-xs opacity-50 mt-4">
                         Secure checkout powered by PayFast (Coming Soon)
                     </p>

@@ -1,11 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
-import HomePage from './pages/HomePage';
-import PartnerDashboard from './pages/PartnerDashboard';
+import LandingPage from './pages/LandingPage';
+import RegisterPage from './pages/RegisterPage';
+import ShopPage from './pages/ShopPage';
 import LoginPage from './pages/LoginPage';
+import PartnerDashboard from './pages/PartnerDashboard';
 import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
@@ -27,10 +30,13 @@ function App() {
                     <BrowserRouter>
                         <Routes>
                             <Route path="/" element={<MainLayout />}>
-                                <Route index element={<HomePage />} />
+                                <Route index element={<LandingPage />} />
+                                <Route path="shop" element={<ShopPage />} />
                                 <Route path="login" element={<LoginPage />} />
+                                <Route path="register" element={<RegisterPage />} />
                                 <Route path="product/:id" element={<ProductDetailPage />} />
                                 <Route path="cart" element={<CartPage />} />
+                                <Route path="checkout" element={<CheckoutPage />} />
 
                                 {/* Protected Partner Routes */}
                                 <Route element={<ProtectedRoute />}>

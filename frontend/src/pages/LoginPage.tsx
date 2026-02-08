@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Lock, Mail, ArrowRight } from 'lucide-react';
 
 export default function LoginPage() {
@@ -54,8 +54,8 @@ export default function LoginPage() {
                                     type="email"
                                     required
                                     className={`appearance-none rounded-xl relative block w-full px-3 py-3 pl-10 border placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${theme === 'royal'
-                                            ? 'bg-black/20 border-white/10 text-white'
-                                            : 'bg-white border-gray-300 text-gray-900'
+                                        ? 'bg-black/20 border-white/10 text-white'
+                                        : 'bg-white border-gray-300 text-gray-900'
                                         }`}
                                     placeholder="Email address"
                                     value={email}
@@ -75,8 +75,8 @@ export default function LoginPage() {
                                     type="password"
                                     required
                                     className={`appearance-none rounded-xl relative block w-full px-3 py-3 pl-10 border placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${theme === 'royal'
-                                            ? 'bg-black/20 border-white/10 text-white'
-                                            : 'bg-white border-gray-300 text-gray-900'
+                                        ? 'bg-black/20 border-white/10 text-white'
+                                        : 'bg-white border-gray-300 text-gray-900'
                                         }`}
                                     placeholder="Password"
                                     value={password}
@@ -101,14 +101,22 @@ export default function LoginPage() {
                         type="submit"
                         disabled={loading}
                         className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-white transition transform hover:scale-[1.02] ${theme === 'royal'
-                                ? 'bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-500/30'
-                                : 'bg-nude-900 hover:bg-nude-800'
+                            ? 'bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-500/30'
+                            : 'bg-nude-900 hover:bg-nude-800'
                             }`}
                     >
                         {loading ? 'Signing in...' : 'Sign in'}
                         {!loading && <ArrowRight size={16} className="ml-2" />}
                     </button>
                 </form>
+
+                <div className="mt-6 text-center text-sm opacity-60">
+                    Don't have an account?{' '}
+                    <Link to="/register" className={`font-bold hover:underline ${theme === 'royal' ? 'text-indigo-400' : 'text-nude-600'
+                        }`}>
+                        Register Now
+                    </Link>
+                </div>
             </div>
         </div>
     );
