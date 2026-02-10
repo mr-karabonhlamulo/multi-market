@@ -9,6 +9,8 @@ import PartnerDashboard from './pages/PartnerDashboard';
 import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
@@ -37,6 +39,8 @@ function App() {
                                 <Route path="product/:id" element={<ProductDetailPage />} />
                                 <Route path="cart" element={<CartPage />} />
                                 <Route path="checkout" element={<CheckoutPage />} />
+                                <Route path="about" element={<AboutPage />} />
+                                <Route path="contact" element={<ContactPage />} />
 
                                 {/* Protected Partner Routes */}
                                 <Route element={<ProtectedRoute />}>

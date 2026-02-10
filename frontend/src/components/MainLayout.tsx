@@ -21,8 +21,12 @@ export default function MainLayout() {
                         </Link>
 
                         <div className="hidden md:flex space-x-8 items-center">
-                            <Link to="/" className="hover:opacity-75 transition">Shop</Link>
-                            <Link to="/partner" className="hover:opacity-75 transition">Partner Portal</Link>
+                            <Link to="/" className="hover:opacity-75 transition font-medium">Home</Link>
+                            <Link to="/about" className="hover:opacity-75 transition font-medium">About</Link>
+                            <Link to="/shop" className="hover:opacity-75 transition font-medium">Shop</Link>
+                            <Link to="/contact" className="hover:opacity-75 transition font-medium">Contact</Link>
+
+                            <Link to="/partner" className="hover:opacity-75 transition text-sm opacity-60">Partner Portal</Link>
 
                             <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-white/10 transition">
                                 {theme === 'royal' ? <Sun size={20} /> : <Moon size={20} />}
