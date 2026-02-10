@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
-import { User, Mail, Lock, Phone, ArrowRight } from 'lucide-react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { User, Mail, Lock, Phone, ArrowRight, Briefcase, FileText } from 'lucide-react';
 
 export default function RegisterPage() {
     const { theme } = useTheme();
-    const { login } = useAuth(); // We'll auto-login after register for now, or just mock it
+    const { login } = useAuth();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const isReseller = searchParams.get('type') === 'reseller';
 
     const [formData, setFormData] = useState({
         firstName: '',
@@ -15,7 +17,10 @@ export default function RegisterPage() {
         email: '',
         phone: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        // Reseller specific fields
+        businessName: '',
+        taxId: ''
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,29 +37,48 @@ export default function RegisterPage() {
         }
 
         // Mock Registration Logic
-        console.log("Registering user:", formData);
+        console.log(`Registering ${isReseller ? 'RESELLER' : 'USER'}:`, formData);
 
         // Simulate API call
         setTimeout(() => {
             // For now, we just log them in with the new credentials (mock)
             login(formData.email, formData.password);
-            navigate('/partner'); // Redirect to dashboard or shop
+
+            if (isReseller) {
+                alert("Reseller Application Submitted for Review!");
+                navigate('/partner');
+            } else {
+                navigate('/');
+            }
         }, 1000);
     };
 
     const inputClasses = `w-full pl-12 pr-4 py-3 rounded-xl border outline-none transition ${theme === 'royal'
-            ? 'bg-white/5 border-white/10 focus:border-indigo-500 text-white placeholder-white/20'
-            : 'bg-white border-nude-200 focus:border-nude-400 text-nude-900 placeholder-nude-300'
+        ? 'bg-white/5 border-white/10 focus:border-indigo-500 text-white placeholder-white/20'
+        : 'bg-white border-nude-200 focus:border-nude-400 text-nude-900 placeholder-nude-300 ring-0'
         }`;
 
     return (
         <div className="min-h-[80vh] flex items-center justify-center py-12 px-4">
-            <div className={`w-full max-w-md p-8 rounded-3xl shadow-2xl ${theme === 'royal' ? 'bg-black/40 backdrop-blur-xl border border-white/10' : 'bg-white/80 backdrop-blur-xl border border-white'
+            <div className={`w-full max-w-lg p-8 rounded-3xl shadow-2xl ${theme === 'royal' ? 'bg-black/40 backdrop-blur-xl border border-white/10' : 'bg-white/80 backdrop-blur-xl border border-white'
                 }`}>
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-serif font-bold mb-2">Create Account</h1>
-                    <p className="opacity-60 text-sm">Join the MLM Co. exclusive network</p>
+                    <h1 className="text-3xl font-serif font-bold mb-2">
+                        {isReseller ? 'Partner Registration' : 'Create Account'}
+                    </h1>
+                    <p className="opacity-60 text-sm">
+                        {isReseller
+                            ? 'Join our exclusive network of official resellers'
+                            : 'Join the MLM Co. exclusive network'}
+                    </p>
                 </div>
+
+                {isReseller && (
+                    <div className={`mb-8 p-4 rounded-xl text-center text-sm border ${theme === 'royal' ? 'bg-indigo-900/40 border-indigo-500/30' : 'bg-nude-200/50 border-nude-300'}`}>
+                        <p className="font-bold mb-1">Become an Affiliate</p>
+                        <p className="opacity-80">Earn commissions on every sale. Access exclusive marketing assets.</p>
+                    </div>
+                )}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
@@ -109,6 +133,38 @@ export default function RegisterPage() {
                         />
                     </div>
 
+                    {isReseller && (
+                        <>
+                            <div className="relative">
+                                <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 opacity-40" size={20} />
+                                <input
+                                    type="text"
+                                    name="businessName"
+                                    placeholder="Business Name (Optional)"
+                                    value={formData.businessName}
+                                    onChange={handleChange}
+                                    className={inputClasses}
+                                />
+                            </div>
+                            <div className="relative">
+                                <FileText className="absolute left-4 top-1/2 -translate-y-1/2 opacity-40" size={20} />
+                                <input
+                                    type="text"
+                                    name="taxId"
+                                    placeholder="Tax ID / Reseller Code"
+                                    value={formData.taxId}
+                                    onChange={handleChange}
+                                    className={inputClasses}
+                                />
+                            </div>
+                            {/* Placeholder for "Provided Images" */}
+                            <div className="mt-4 border-2 border-dashed rounded-xl p-6 text-center opacity-60 hover:opacity-100 transition cursor-pointer border-current">
+                                <p className="text-xs">Upload ID / Business Documents</p>
+                                <p className="text-[10px] mt-1">(Drag & Drop or Click)</p>
+                            </div>
+                        </>
+                    )}
+
                     <div className="relative">
                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 opacity-40" size={20} />
                         <input
@@ -138,11 +194,11 @@ export default function RegisterPage() {
                     <button
                         type="submit"
                         className={`w-full py-4 rounded-xl font-bold text-lg shadow-lg flex items-center justify-center gap-2 transition transform hover:scale-[1.02] mt-6 ${theme === 'royal'
-                                ? 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20'
-                                : 'bg-nude-900 hover:bg-nude-800 text-nude-50'
+                            ? 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20'
+                            : 'bg-nude-900 hover:bg-nude-800 text-nude-50'
                             }`}
                     >
-                        Register <ArrowRight size={20} />
+                        {isReseller ? 'Submit Application' : 'Register'} <ArrowRight size={20} />
                     </button>
                 </form>
 

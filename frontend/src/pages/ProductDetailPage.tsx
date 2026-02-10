@@ -85,13 +85,30 @@ export default function ProductDetailPage() {
                         </div>
                     </div>
 
-                    <div className="pt-4">
-                        <button className={`w-full py-4 rounded-xl font-bold text-lg shadow-xl shadow-lg transition transform hover:scale-[1.02] active:scale-[0.98] ${theme === 'royal'
-                                ? 'bg-indigo-600 hover:bg-indigo-500 shadow-indigo-500/20 text-white'
-                                : 'bg-nude-900 hover:bg-nude-800 text-nude-50'
+                    <div className="pt-4 space-y-4">
+                        <button className={`w-full py-4 rounded-xl font-bold text-lg shadow-xl transition transform hover:scale-[1.02] active:scale-[0.98] ${theme === 'royal'
+                            ? 'bg-indigo-600 hover:bg-indigo-500 shadow-indigo-500/20 text-white'
+                            : 'bg-nude-900 hover:bg-nude-800 text-nude-50'
                             }`}>
                             Add to Cart — {product.price}
                         </button>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <Link to="/register?type=reseller" className={`py-4 rounded-xl font-bold text-center border-2 transition hover:bg-opacity-10 ${theme === 'royal'
+                                    ? 'border-indigo-400 text-indigo-300 hover:bg-indigo-400'
+                                    : 'border-nude-600 text-nude-800 hover:bg-nude-900'
+                                }`}>
+                                Register as Reseller
+                            </Link>
+                            <button className={`py-4 rounded-xl font-bold border-2 transition hover:bg-opacity-10 ${theme === 'royal'
+                                    ? 'border-indigo-400 text-indigo-300 hover:bg-indigo-400'
+                                    : 'border-nude-600 text-nude-800 hover:bg-nude-900'
+                                }`}
+                                onClick={() => alert("Affiliate link copied to clipboard!")}
+                            >
+                                Get Affiliate Link
+                            </button>
+                        </div>
                     </div>
 
                     {product.ingredients && (
