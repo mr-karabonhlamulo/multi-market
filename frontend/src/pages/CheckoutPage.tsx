@@ -4,14 +4,14 @@ import { useTheme } from '../contexts/ThemeContext';
 import { ArrowRight, CreditCard, Truck } from 'lucide-react';
 
 export default function CheckoutPage() {
-    const { items, cartTotal, clearCart } = useCart();
+    const { items, cartTotal } = useCart();
     const { theme } = useTheme();
     const [loading, setLoading] = useState(false);
 
     // PayFast Configuration (Sandbox/Live)
     const merchantId = '10000100'; // Sandbox Merchant ID
     const merchantKey = '46f0cd694581a'; // Sandbox Merchant Key
-    const passPhrase = ''; // Optional, set in PayFast dashboard
+    /* const passPhrase = ''; // Optional, set in PayFast dashboard */
 
     // Helper to calculate total valid amount numeric
     const calculateTotal = () => {
@@ -83,8 +83,8 @@ export default function CheckoutPage() {
     };
 
     const inputClasses = `w-full px-4 py-3 rounded-xl border outline-none transition ${theme === 'royal'
-            ? 'bg-white/5 border-white/10 focus:border-indigo-500 text-white placeholder-white/20'
-            : 'bg-white border-nude-200 focus:border-nude-400 text-nude-900 placeholder-nude-300'
+        ? 'bg-white/5 border-white/10 focus:border-indigo-500 text-white placeholder-white/20'
+        : 'bg-white border-nude-200 focus:border-nude-400 text-nude-900 placeholder-nude-300'
         }`;
 
     if (items.length === 0) {
@@ -197,8 +197,8 @@ export default function CheckoutPage() {
                         form="checkout-form"
                         disabled={loading}
                         className={`w-full py-4 rounded-xl font-bold text-lg shadow-lg flex items-center justify-center gap-2 transition transform hover:scale-[1.02] ${theme === 'royal'
-                                ? 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20'
-                                : 'bg-nude-900 hover:bg-nude-800 text-nude-50'
+                            ? 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20'
+                            : 'bg-nude-900 hover:bg-nude-800 text-nude-50'
                             }`}
                     >
                         {loading ? 'Processing...' : 'Secure Checkout with PayFast'} <ArrowRight size={20} />

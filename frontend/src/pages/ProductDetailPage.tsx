@@ -1,8 +1,7 @@
-import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import { products } from '../data/products';
-import { ArrowLeft, ShoppingBag, Droplets, Wind, Layers } from 'lucide-react';
+import { ArrowLeft, Droplets, Wind, Layers } from 'lucide-react';
 
 export default function ProductDetailPage() {
     const { id } = useParams();
@@ -93,16 +92,16 @@ export default function ProductDetailPage() {
                             Add to Cart — {product.price}
                         </button>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <Link to="/register?type=reseller" className={`py-4 rounded-xl font-bold text-center border-2 transition hover:bg-opacity-10 ${theme === 'royal'
-                                    ? 'border-indigo-400 text-indigo-300 hover:bg-indigo-400'
-                                    : 'border-nude-600 text-nude-800 hover:bg-nude-900'
+                                ? 'border-indigo-400 text-indigo-300 hover:bg-indigo-400'
+                                : 'border-nude-600 text-nude-800 hover:bg-nude-900'
                                 }`}>
                                 Register as Reseller
                             </Link>
                             <button className={`py-4 rounded-xl font-bold border-2 transition hover:bg-opacity-10 ${theme === 'royal'
-                                    ? 'border-indigo-400 text-indigo-300 hover:bg-indigo-400'
-                                    : 'border-nude-600 text-nude-800 hover:bg-nude-900'
+                                ? 'border-indigo-400 text-indigo-300 hover:bg-indigo-400'
+                                : 'border-nude-600 text-nude-800 hover:bg-nude-900'
                                 }`}
                                 onClick={() => alert("Affiliate link copied to clipboard!")}
                             >

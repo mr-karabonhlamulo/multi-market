@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
 import Background3D from '../components/Background3D';
@@ -31,8 +30,8 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {socialPosts.map((post) => (
                         <div key={post.id} className={`p-6 rounded-2xl backdrop-blur-md transition transform hover:-translate-y-2 hover:shadow-2xl ${theme === 'royal'
-                                ? 'bg-white/10 border border-white/10 shadow-lg shadow-indigo-500/10'
-                                : 'bg-white/80 border border-nude-200 shadow-xl'
+                            ? 'bg-white/10 border border-white/10 shadow-lg shadow-indigo-500/10'
+                            : 'bg-white/80 border border-nude-200 shadow-xl'
                             }`}>
                             <div className="flex items-center gap-3 mb-4">
                                 <div className={`p-2 rounded-full ${theme === 'royal' ? 'bg-indigo-500/20 text-indigo-300' : 'bg-nude-100 text-nude-600'

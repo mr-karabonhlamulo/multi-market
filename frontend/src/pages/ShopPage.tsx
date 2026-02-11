@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useCart } from '../contexts/CartContext';
 import { products } from '../data/products';
@@ -12,7 +11,7 @@ export default function ShopPage() {
         <div className="max-w-7xl mx-auto px-4 py-24">
             <h1 className="text-4xl font-serif font-bold mb-12 text-center">Exclusive Collection</h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
                 {products.map(product => (
                     <div key={product.id} className="group relative">
                         {/* Card Container */}

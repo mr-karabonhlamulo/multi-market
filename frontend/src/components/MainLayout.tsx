@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useCart } from '../contexts/CartContext';
 import { Link, Outlet } from 'react-router-dom';
-import { ShoppingBag, User, LayoutDashboard, Sun, Moon, Menu, X } from 'lucide-react';
+import { ShoppingBag, Sun, Moon, Menu, X } from 'lucide-react';
 
 export default function MainLayout() {
     const { theme, toggleTheme } = useTheme();
@@ -30,7 +30,7 @@ export default function MainLayout() {
                             <Link to="/shop" className="hover:opacity-75 transition font-medium">Shop</Link>
                             <Link to="/contact" className="hover:opacity-75 transition font-medium">Contact</Link>
 
-                            <Link to="/partner" className="hover:opacity-75 transition text-sm opacity-60">Partner Portal</Link>
+
 
                             <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-white/10 transition">
                                 {theme === 'royal' ? <Sun size={20} /> : <Moon size={20} />}
@@ -62,15 +62,14 @@ export default function MainLayout() {
                     </div>
                 </div>
 
-                {/* Mobile Menu Overlay */}
                 {isMenuOpen && (
-                    <div className={`fixed inset-0 z-40 flex flex-col items-center justify-center space-y-8 text-2xl font-serif backdrop-blur-xl transition-all duration-300 ${theme === 'royal' ? 'bg-royal-900/95 text-white' : 'bg-nude-100/95 text-nude-900'
+                    <div className={`fixed top-16 left-0 right-0 bottom-0 z-40 flex flex-col items-center justify-center space-y-8 text-2xl font-serif transition-all duration-300 ${theme === 'royal' ? 'bg-royal-900 text-white' : 'bg-nude-100 text-nude-900'
                         }`}>
                         <Link to="/" onClick={toggleMenu} className="hover:scale-105 transition transform">Home</Link>
                         <Link to="/about" onClick={toggleMenu} className="hover:scale-105 transition transform">About</Link>
                         <Link to="/shop" onClick={toggleMenu} className="hover:scale-105 transition transform">Shop</Link>
                         <Link to="/contact" onClick={toggleMenu} className="hover:scale-105 transition transform">Contact</Link>
-                        <Link to="/partner" onClick={toggleMenu} className="text-lg opacity-60 mt-8">Partner Portal</Link>
+
 
                         <div className="flex items-center gap-6 mt-8">
                             <button onClick={toggleTheme} className="p-4 rounded-full bg-white/10 hover:bg-white/20 transition">
