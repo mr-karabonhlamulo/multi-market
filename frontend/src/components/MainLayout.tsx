@@ -63,8 +63,8 @@ export default function MainLayout() {
                 </div>
 
                 {isMenuOpen && (
-                    <div className={`fixed top-16 left-0 right-0 bottom-0 z-[9999] flex flex-col items-center justify-center space-y-8 text-2xl font-serif ${theme === 'royal' ? 'bg-slate-900 text-white' : 'bg-stone-100 text-stone-900'
-                        }`} style={{ backgroundColor: theme === 'royal' ? '#0f172a' : '#f5f5f4', opacity: 1 }}>
+                    <div className={`fixed top-16 left-0 right-0 bottom-0 z-[9999] flex flex-col items-center justify-center space-y-8 text-2xl font-serif backdrop-blur-xl transition-all duration-300 ${theme === 'royal' ? 'bg-royal-900/90 text-white' : 'bg-nude-100/90 text-nude-900'
+                        }`}>
                         <Link to="/" onClick={toggleMenu} className="hover:scale-105 transition transform">Home</Link>
                         <Link to="/about" onClick={toggleMenu} className="hover:scale-105 transition transform">About</Link>
                         <Link to="/shop" onClick={toggleMenu} className="hover:scale-105 transition transform">Shop</Link>

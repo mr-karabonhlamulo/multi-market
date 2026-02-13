@@ -41,7 +41,7 @@ const CurrencySymbol = ({ symbol, theme }: { symbol: string, theme: string }) =>
             ref={mesh}
             position={position as [number, number, number]}
             fontSize={0.5 + Math.random() * 0.8} // Varied sizes
-            color={theme === 'royal' ? '#FFD700' : '#85bb65'} // Gold or Green
+            color="#FFD700" // Always Gold as requested for "mini shopping carts currency in gold"
             anchorX="center"
             anchorY="middle"
             fillOpacity={0.6}
@@ -54,7 +54,7 @@ const CurrencySymbol = ({ symbol, theme }: { symbol: string, theme: string }) =>
 };
 
 const CurrencyParticles = ({ count = 50, theme }: { count?: number; theme: string }) => {
-    const symbols = ['$', '€', '£', 'R', '¥', '₿'];
+    const symbols = ['$', '€', '£', 'R', '¥', '₿', '🛒']; // Added shopping cart
 
     return (
         <>
