@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useCart } from '../contexts/CartContext';
 import { Link, Outlet } from 'react-router-dom';
-import { Sun, Moon, ShoppingBag, Menu, X, Leaf, ChevronDown } from 'lucide-react';
+import { Sun, Moon, ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
 
 export default function MainLayout() {
     const { theme, toggleTheme } = useTheme();
@@ -20,7 +20,11 @@ export default function MainLayout() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         <Link to="/" className="text-2xl font-serif font-bold tracking-tight z-50 relative flex items-center group">
-                            <Leaf className={`mr-1 transition-transform group-hover:scale-110 ${theme === 'royal' ? 'text-royal-accent' : 'text-nude-400'}`} size={24} />
+                            <img
+                                src="/media__1772958613507.jpg"
+                                alt="GreenLeaf Logo"
+                                className="w-8 h-8 rounded-full object-cover mr-2 border border-white/20 transition-transform group-hover:scale-110"
+                            />
                             GREEN<span className={theme === 'royal' ? 'text-royal-accent' : 'text-nude-400'}>Leaf</span>
                         </Link>
 

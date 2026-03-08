@@ -1,6 +1,7 @@
 import { useTheme } from '../contexts/ThemeContext';
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
 import Background3D from '../components/Background3D';
+import StaticBanner from '../components/StaticBanner';
 
 export default function ContactPage() {
     const { theme } = useTheme();
@@ -15,16 +16,12 @@ export default function ContactPage() {
     ];
 
     return (
-        <div className="relative min-h-screen pt-20 pb-12">
+        <div className="relative min-h-screen pt-0 pb-12 -mx-4 sm:-mx-6 lg:-mx-8 -mt-20">
             <Background3D theme={theme as 'royal' | 'nude'} />
 
-            <div className="max-w-7xl mx-auto px-4 relative z-10">
-                <h1 className={`text-5xl font-serif font-bold text-center mb-4 ${theme === 'royal' ? 'text-white' : 'text-nude-900'}`}>
-                    Connect With Us
-                </h1>
-                <p className={`text-center mb-16 opacity-70 ${theme === 'royal' ? 'text-white' : 'text-nude-900'}`}>
-                    Stay updated with our latest news and social buzz.
-                </p>
+            <StaticBanner title="Connect With Us" subtitle="Stay updated with our latest news and social buzz." />
+
+            <div className="max-w-7xl mx-auto px-4 relative z-10 pt-12">
 
                 {/* Social Kanban Board */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

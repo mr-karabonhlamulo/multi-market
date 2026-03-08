@@ -1,66 +1,53 @@
 import { Hono } from 'hono'
-import { supabase } from '../db/supabase'
+import db from '../db/sqlite'
 import { processCommission } from '../services/commission'
 
 const orders = new Hono()
 
 orders.post('/', async (c) => {
     const { user_id, items } = await c.req.json()
-    // items: [{ product_id, quantity }]
 
     if (!items || items.length === 0) {
         return c.json({ error: 'No items in order' }, 400)
     }
 
-    // 1. Verify User Role (for Wholesale Check)
-    const { data: user } = await supabase.from('users').select('*').eq('id', user_id)
-    const currentUser = Array.isArray(user) ? user[0] : user
+    try {
+        const currentUser = db.prepare('SELECT * FROM users WHERE id = ?').get(user_id) as any
 
-    if (!currentUser) return c.json({ error: 'User not found' }, 404)
+        if (!currentUser) return c.json({ error: 'User not found' }, 404)
 
-    const isPartner = currentUser.role === 'partner' || currentUser.role === 'admin'
-    let totalAmount = 0
+        const isPartner = currentUser.role === 'partner' || currentUser.role === 'admin'
+        let totalAmount = 0
 
-    // 2. Process Items & Calculate Total
-    for (const item of items) {
-        const { data: product } = await supabase.from('products').select('*').eq('id', item.product_id)
-        const currentProduct = Array.isArray(product) ? product[0] : product
+        for (const item of items) {
+            const currentProduct = db.prepare('SELECT * FROM products WHERE id = ?').get(item.product_id) as any
 
-        if (!currentProduct) continue
+            if (!currentProduct) continue
 
-        // MOQ Check for Partners
-        if (isPartner && item.quantity < currentProduct.moq) {
-            return c.json({
-                error: `MOQ not met for ${currentProduct.name}. Minimum is ${currentProduct.moq}.`
-            }, 400)
+            if (isPartner && item.quantity < currentProduct.moq) {
+                return c.json({
+                    error: `MOQ not met for ${currentProduct.name}. Minimum is ${currentProduct.moq}.`
+                }, 400)
+            }
+
+            const price = isPartner ? currentProduct.wholesale_price : currentProduct.retail_price
+            totalAmount += price * item.quantity
         }
 
-        const price = isPartner ? currentProduct.wholesale_price : currentProduct.retail_price
-        totalAmount += price * item.quantity
-    }
+        const id = Math.random().toString(36).substring(7)
+        db.prepare(`
+            INSERT INTO orders (id, user_id, status, total_amount)
+            VALUES (?, ?, ?, ?)
+        `).run(id, user_id, 'paid', totalAmount)
 
-    // 3. Create Order
-    const { data: orderData, error: orderError } = await supabase
-        .from('orders')
-        .insert({
-            user_id,
-            total_amount: totalAmount,
-            status: 'paid', // Simulating payment
-            is_wholesale: isPartner
-        })
-    // Mock insert returns array
-    const newOrder = orderData ? orderData[0] : null
+        const newOrder = db.prepare('SELECT * FROM orders WHERE id = ?').get(id) as any
 
-    if (orderError) return c.json({ error: orderError.message }, 500)
-
-    // 4. Process Commission (Async)
-    // We don't await this to keep response fast, or we can await.
-    if (newOrder) {
-        // Mock ID generation might need to be ensured in supabase.ts if not robust
         await processCommission(newOrder.id, user_id, totalAmount)
-    }
 
-    return c.json({ message: 'Order created successfully', order: newOrder })
+        return c.json({ message: 'Order created successfully', order: newOrder })
+    } catch (error: any) {
+        return c.json({ error: error.message }, 500)
+    }
 })
 
 export default orders
