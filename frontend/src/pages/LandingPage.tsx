@@ -1,11 +1,47 @@
+import { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 import Background3D from '../components/Background3D';
-import { products } from '../data/products';
+import { products as staticProducts, Product } from '../data/products';
 import BannerSlider from '../components/BannerSlider';
 
 export default function LandingPage() {
     const { theme } = useTheme();
+    const [products, setProducts] = useState<Product[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch('/api/products');
+                const data = await response.json();
+
+                if (response.ok && Array.isArray(data)) {
+                    const mappedProducts = data.map((p: any) => ({
+                        id: Number(p.id),
+                        name: p.name,
+                        price: `R${p.retail_price.toLocaleString()}`,
+                        description: p.description,
+                        image: p.image_url,
+                        type: p.category,
+                        volume: '50ml',
+                        stock: 10,
+                        notes: { top: '', heart: '', base: '' }
+                    }));
+                    setProducts(mappedProducts);
+                } else {
+                    setProducts(staticProducts);
+                }
+            } catch (err) {
+                console.error('Fetch error:', err);
+                setProducts(staticProducts);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
 
     return (
         <div className="space-y-20 pb-12 relative min-h-screen flex flex-col justify-start">

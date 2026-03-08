@@ -1,14 +1,54 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
-import { products } from '../data/products';
+import { products as staticProducts, Product } from '../data/products';
 import { ArrowLeft, Droplets, Wind, Layers } from 'lucide-react';
 
 export default function ProductDetailPage() {
     const { id } = useParams();
     const { theme } = useTheme();
+    const [product, setProduct] = useState<Product | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    const product = products.find(p => p.id === Number(id));
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await fetch(`/api/products/${id}`);
+                const data = await response.json();
 
+                if (response.ok && data) {
+                    setProduct({
+                        id: Number(data.id),
+                        name: data.name,
+                        price: `R${data.retail_price.toLocaleString()}`,
+                        description: data.description,
+                        image: data.image_url,
+                        type: data.category,
+                        volume: '50ml',
+                        stock: 10,
+                        notes: {
+                            top: 'Blackcurrant, Raspberry',
+                            heart: 'Rose Absolute, Jasmine',
+                            base: 'Vanilla, Musk, Cedarwood'
+                        }
+                    });
+                } else {
+                    const fallback = staticProducts.find(p => p.id === Number(id));
+                    setProduct(fallback || null);
+                }
+            } catch (err) {
+                console.error('Fetch error:', err);
+                const fallback = staticProducts.find(p => p.id === Number(id));
+                setProduct(fallback || null);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProduct();
+    }, [id]);
+
+    if (loading) return <div className="p-20 text-center">Loading Product...</div>;
     if (!product) {
         return <div className="p-20 text-center">Product not found</div>;
     }
