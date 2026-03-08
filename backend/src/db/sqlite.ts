@@ -1,6 +1,9 @@
 import Database from 'better-sqlite3';
+import path from 'path';
 
-const db = new Database('database.sqlite');
+const isProduction = process.env.NODE_ENV === 'production';
+const dbPath = isProduction ? path.join('/tmp', 'database.sqlite') : 'database.sqlite';
+const db = new Database(dbPath);
 db.pragma('journal_mode = WAL'); // Better performance
 
 // Initialize Tables

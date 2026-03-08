@@ -11,8 +11,8 @@ export interface DBAdapter {
 class SQLiteAdapter implements DBAdapter {
     private db: any
     constructor() {
-        // Use a path that works in Vercel locally or in a real env
-        const dbPath = path.resolve(process.cwd(), 'database.sqlite')
+        const isProduction = process.env.NODE_ENV === 'production';
+        const dbPath = isProduction ? path.join('/tmp', 'database.sqlite') : path.resolve(process.cwd(), 'database.sqlite');
         this.db = new Database(dbPath)
         this.db.pragma('journal_mode = WAL')
     }
@@ -67,7 +67,9 @@ if (supabaseUrl && supabaseKey) {
     db = createClient(supabaseUrl, supabaseKey)
 } else {
     // Falls back to SQLite if no Supabase credentials found
-    const sqlite = new Database(path.resolve(process.cwd(), 'database.sqlite'))
+    const isProd = process.env.NODE_ENV === 'production';
+    const dbPath = isProd ? path.join('/tmp', 'database.sqlite') : path.resolve(process.cwd(), 'database.sqlite');
+    const sqlite = new Database(dbPath)
     sqlite.pragma('journal_mode = WAL')
     db = sqlite
 }
