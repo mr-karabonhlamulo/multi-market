@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useCart } from '../contexts/CartContext';
 import { Link, Outlet } from 'react-router-dom';
-import { Sun, Moon, ShoppingBag, Menu, X, Leaf } from 'lucide-react';
+import { Sun, Moon, ShoppingBag, Menu, X, Leaf, ChevronDown } from 'lucide-react';
 
 export default function MainLayout() {
     const { theme, toggleTheme } = useTheme();
@@ -27,8 +27,28 @@ export default function MainLayout() {
                         {/* Desktop Menu */}
                         <div className="hidden md:flex space-x-8 items-center">
                             <Link to="/" className="hover:opacity-75 transition font-medium">Home</Link>
-                            <Link to="/about" className="hover:opacity-75 transition font-medium">About</Link>
-                            <Link to="/shop" className="hover:opacity-75 transition font-medium">Shop</Link>
+
+                            <div className="relative group">
+                                <button className="flex items-center gap-1 hover:opacity-75 transition font-medium py-2">
+                                    Info <ChevronDown size={16} />
+                                </button>
+                                <div className={`absolute top-full left-0 w-48 mt-2 py-2 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ${theme === 'royal' ? 'bg-royal-800' : 'bg-white'}`}>
+                                    <Link to="/about" className="block px-4 py-2 text-sm hover:opacity-75 transition">About Us</Link>
+                                    <Link to="/faq" className="block px-4 py-2 text-sm hover:opacity-75 transition">FAQ</Link>
+                                    <Link to="/terms" className="block px-4 py-2 text-sm hover:opacity-75 transition">T&amp;C's</Link>
+                                </div>
+                            </div>
+
+                            <div className="relative group">
+                                <button className="flex items-center gap-1 hover:opacity-75 transition font-medium py-2">
+                                    Shop <ChevronDown size={16} />
+                                </button>
+                                <div className={`absolute top-full left-0 w-48 mt-2 py-2 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ${theme === 'royal' ? 'bg-royal-800' : 'bg-white'}`}>
+                                    <Link to="/shop" className="block px-4 py-2 text-sm hover:opacity-75 transition">All Products</Link>
+                                    <Link to="/shop?category=fragrances" className="block px-4 py-2 text-sm hover:opacity-75 transition">Categories</Link>
+                                </div>
+                            </div>
+
                             <Link to="/contact" className="hover:opacity-75 transition font-medium">Contact</Link>
 
 
@@ -67,9 +87,23 @@ export default function MainLayout() {
                     <div className={`fixed inset-0 z-40 flex flex-col items-center justify-start pt-32 space-y-8 text-2xl font-serif backdrop-blur-xl transition-all duration-300 ${theme === 'royal' ? 'bg-royal-900/90 text-white' : 'bg-nude-100/90 text-nude-900'
                         }`}>
                         <Link to="/" onClick={toggleMenu} className="hover:scale-105 transition transform">Home</Link>
-                        <Link to="/about" onClick={toggleMenu} className="hover:scale-105 transition transform">About</Link>
-                        <Link to="/shop" onClick={toggleMenu} className="hover:scale-105 transition transform">Shop</Link>
-                        <Link to="/contact" onClick={toggleMenu} className="hover:scale-105 transition transform">Contact</Link>
+
+                        {/* Info Section */}
+                        <div className="flex flex-col items-center gap-4 text-center mt-6">
+                            <span className="text-xs opacity-50 uppercase tracking-widest font-sans font-bold">Info</span>
+                            <Link to="/about" onClick={toggleMenu} className="hover:text-royal-accent transition transform text-xl">About Us</Link>
+                            <Link to="/faq" onClick={toggleMenu} className="hover:text-royal-accent transition transform text-xl">FAQ</Link>
+                            <Link to="/terms" onClick={toggleMenu} className="hover:text-royal-accent transition transform text-xl">T&amp;C's</Link>
+                        </div>
+
+                        {/* Shop Section */}
+                        <div className="flex flex-col items-center gap-4 text-center mt-6">
+                            <span className="text-xs opacity-50 uppercase tracking-widest font-sans font-bold">Shop</span>
+                            <Link to="/shop" onClick={toggleMenu} className="hover:text-royal-accent transition transform text-xl">All Products</Link>
+                            <Link to="/shop?category=fragrances" onClick={toggleMenu} className="hover:text-royal-accent transition transform text-xl">Categories</Link>
+                        </div>
+
+                        <Link to="/contact" onClick={toggleMenu} className="hover:scale-105 transition transform mt-6">Contact</Link>
 
 
                         <div className="flex items-center gap-6 mt-8">

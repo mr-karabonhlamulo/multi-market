@@ -29,25 +29,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const login = async (email: string, password: string) => {
         try {
-            // Direct fetch to our backend
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                return { success: false, error: data.error || 'Login failed' };
-            }
-
-            // Mock user mapping from response
+            // MOCK LOGIN for preview to client (No DB needed)
             const loggedInUser = {
-                id: data.user.id,
+                id: 'mock-id-1234',
                 email: email,
-                role: 'partner', // Defaulting for visual preview as our backend mock might be simple
-                full_name: 'Partner User'
+                role: 'partner',
+                full_name: 'Preview Partner'
             };
 
             setUser(loggedInUser);
@@ -55,7 +42,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             return { success: true };
         } catch (err) {
             console.error(err);
-            return { success: false, error: 'Network error. Is backend running?' };
+            return { success: false, error: 'Network error.' };
         }
     };
 
