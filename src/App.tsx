@@ -30,7 +30,7 @@ function App() {
         <ThemeProvider>
             <AuthProvider>
                 <CartProvider>
-                    <BrowserRouter>
+                    <BrowserRouter basename="/multi-market">
                         <Routes>
                             <Route path="/" element={<MainLayout />}>
                                 <Route index element={<LandingPage />} />
