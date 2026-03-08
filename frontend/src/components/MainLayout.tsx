@@ -21,7 +21,7 @@ export default function MainLayout() {
                     <div className="flex justify-between items-center h-16">
                         <Link to="/" className="text-2xl font-serif font-bold tracking-tight z-50 relative flex items-center group">
                             <Leaf className={`mr-1 transition-transform group-hover:scale-110 ${theme === 'royal' ? 'text-royal-accent' : 'text-nude-400'}`} size={24} />
-                            GRN<span className={theme === 'royal' ? 'text-royal-accent' : 'text-nude-400'}>!</span>
+                            GREEN<span className={theme === 'royal' ? 'text-royal-accent' : 'text-nude-400'}>Leaf</span>
                         </Link>
 
                         {/* Desktop Menu */}

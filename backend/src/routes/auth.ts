@@ -1,50 +1,38 @@
 import { Hono } from 'hono'
-import { supabase } from '../db/supabase'
+import db from '../db/sqlite'
 
 const auth = new Hono()
 
 auth.post('/register', async (c) => {
     const { email, password, full_name, referrer_id } = await c.req.json()
 
-    const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-    })
+    try {
+        const id = Math.random().toString(36).substring(7)
+        db.prepare(`
+            INSERT INTO users (id, email, password, full_name, referrer_id)
+            VALUES (?, ?, ?, ?, ?)
+        `).run(id, email, password, full_name, referrer_id)
 
-    if (error) {
-        return c.json({ error: error.message }, 400)
+        const user = db.prepare('SELECT id, email, full_name, role FROM users WHERE id = ?').get(id)
+        return c.json({ message: 'Registration successful', user })
+    } catch (error: any) {
+        return c.json({ error: error.message || 'Registration failed' }, 400)
     }
-
-    // Create user profile in mock DB (or real DB via trigger usually, but manual here for consistency)
-    if (data.user) {
-        await supabase.from('users').insert({
-            id: data.user.id,
-            email,
-            full_name,
-            referrer_id,
-            role: 'partner', // Default to partner for this platform
-            rank: 'bronze',
-            wallet_balance: 0,
-            team_size: 0
-        })
-    }
-
-    return c.json({ message: 'Registration successful', user: data.user })
 })
 
 auth.post('/login', async (c) => {
     const { email, password } = await c.req.json()
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-    })
+    const user = db.prepare('SELECT id, email, full_name, role FROM users WHERE email = ? AND password = ?').get(email, password)
 
-    if (error) {
-        return c.json({ error: error.message }, 401)
+    if (!user) {
+        return c.json({ error: 'Invalid credentials' }, 401)
     }
 
-    return c.json({ session: data.session, user: data.user })
+    // Mock session token for simplicity
+    const session = { access_token: 'mock-token-' + Date.now() }
+
+    return c.json({ session, user })
 })
 
 export default auth

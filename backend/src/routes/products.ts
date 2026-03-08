@@ -1,36 +1,28 @@
 import { Hono } from 'hono'
-import { supabase } from '../db/supabase'
+import db from '../db/sqlite'
 
 const products = new Hono()
 
 products.get('/', async (c) => {
-    const { data, error } = await supabase
-        .from('products')
-        .select('*')
-
-    if (error) {
+    try {
+        const data = db.prepare('SELECT * FROM products').all()
+        return c.json(data)
+    } catch (error: any) {
         return c.json({ error: error.message }, 500)
     }
-
-    return c.json(data)
 })
 
 products.get('/:id', async (c) => {
     const id = c.req.param('id')
-    const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('id', id)
-
-    if (error) {
+    try {
+        const product = db.prepare('SELECT * FROM products WHERE id = ?').get(id)
+        if (!product) {
+            return c.json({ error: 'Product not found' }, 404)
+        }
+        return c.json(product)
+    } catch (error: any) {
         return c.json({ error: error.message }, 500)
     }
-
-    if (!data || data.length === 0) {
-        return c.json({ error: 'Product not found' }, 404)
-    }
-
-    return c.json(data[0])
 })
 
 export default products
