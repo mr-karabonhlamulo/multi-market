@@ -62,4 +62,15 @@ if (productCount.count === 0) {
     insertProduct.run('3', 'Golden Amber', 'Warm and inviting aroma.', 1450, 950, 5, 'fragrances', 'https://via.placeholder.com/300');
 }
 
+const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get() as { count: number };
+if (userCount.count === 0) {
+    const insertUser = db.prepare(`
+        INSERT INTO users (id, email, password, full_name, role, wallet_balance)
+        VALUES (?, ?, ?, ?, ?, ?)
+    `);
+
+    insertUser.run('partner-test', 'partner@perfumeco.online', 'password123', 'John Partner', 'partner', 500);
+    insertUser.run('customer-test', 'customer@gmail.com', 'password123', 'Alice Customer', 'customer', 0);
+}
+
 export default db;

@@ -1,12 +1,51 @@
+import { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useCart } from '../contexts/CartContext';
-import { products } from '../data/products';
+import { products as staticProducts, Product } from '../data/products';
 import { Link } from 'react-router-dom';
 import StaticBanner from '../components/StaticBanner';
 
 export default function ShopPage() {
     const { theme } = useTheme();
     const { addToCart } = useCart();
+    const [products, setProducts] = useState<Product[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch('/api/products');
+                const data = await response.json();
+
+                if (response.ok && Array.isArray(data)) {
+                    // Map backend data to frontend format
+                    const mappedProducts = data.map((p: any) => ({
+                        id: Number(p.id),
+                        name: p.name,
+                        price: `R${p.retail_price.toLocaleString()}`,
+                        description: p.description,
+                        image: p.image_url.startsWith('https') ? p.image_url : p.image_url, // Assuming path matches or use local media
+                        type: p.category,
+                        volume: '50ml', // Fallback or from DB if available
+                        stock: 10, // Mock stock
+                        notes: { top: '', heart: '', base: '' }
+                    }));
+                    setProducts(mappedProducts);
+                } else {
+                    setProducts(staticProducts);
+                }
+            } catch (err) {
+                console.error('Failed to fetch products:', err);
+                setProducts(staticProducts);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    if (loading) return <div className="p-20 text-center">Loading Collection...</div>;
 
     return (
         <div className="pb-24 animate-fade-in -mx-4 sm:-mx-6 lg:-mx-8 -mt-20 pt-0">

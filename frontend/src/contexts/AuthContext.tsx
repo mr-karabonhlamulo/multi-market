@@ -27,22 +27,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }, []);
 
-    const login = async (email: string, _password: string) => {
+    const login = async (email: string, password: string) => {
         try {
-            // MOCK LOGIN for preview to client (No DB needed)
-            const loggedInUser = {
-                id: 'mock-id-1234',
-                email: email,
-                role: 'partner',
-                full_name: 'Preview Partner'
-            };
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
 
-            setUser(loggedInUser);
-            localStorage.setItem('user', JSON.stringify(loggedInUser));
+            const data = await response.json();
+
+            if (!response.ok) {
+                return { success: false, error: data.error || 'Login failed' };
+            }
+
+            const { user, session } = data;
+
+            // Persist the user and mock token
+            setUser(user);
+            localStorage.setItem('user', JSON.stringify(user));
+            if (session) {
+                localStorage.setItem('token', session.access_token);
+            }
             return { success: true };
         } catch (err) {
             console.error(err);
-            return { success: false, error: 'Network error.' };
+            return { success: false, error: 'Network error connecting to backend.' };
         }
     };
 
