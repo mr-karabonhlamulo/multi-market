@@ -30,7 +30,7 @@ function App() {
         <ThemeProvider>
             <AuthProvider>
                 <CartProvider>
-                    <BrowserRouter basename="/multi-market">
+                    <BrowserRouter basename={import.meta.env.VITE_BASE_URL || '/'}>
                         <Routes>
                             <Route path="/" element={<MainLayout />}>
                                 <Route index element={<LandingPage />} />
