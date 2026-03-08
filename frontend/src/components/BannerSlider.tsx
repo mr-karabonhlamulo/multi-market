@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useTheme } from '../contexts/ThemeContext';
+import { useState, useEffect } from 'react';
 
 interface Slide {
     id: number;
@@ -24,7 +23,6 @@ const slides: Slide[] = [
 ];
 
 export default function BannerSlider() {
-    const { theme } = useTheme();
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
 

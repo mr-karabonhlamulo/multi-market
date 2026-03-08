@@ -20,7 +20,7 @@ app.route('/auth', auth)
 app.route('/products', products)
 app.route('/orders', orders)
 
-const port = 3000
+const port = parseInt(process.env.PORT || '3000')
 console.log(`Server is running on port ${port}`)
 
 serve({

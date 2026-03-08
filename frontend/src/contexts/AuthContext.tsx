@@ -27,7 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }, []);
 
-    const login = async (email: string, password: string) => {
+    const login = async (email: string, _password: string) => {
         try {
             // MOCK LOGIN for preview to client (No DB needed)
             const loggedInUser = {
