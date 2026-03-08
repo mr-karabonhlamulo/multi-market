@@ -59,7 +59,7 @@ export default function CheckoutPage() {
             // Transaction Details
             m_payment_id: `ORDER_${Date.now()}`,
             amount: calculateTotal(),
-            item_name: `Order of ${items.length} items from MLM Co.`,
+            item_name: `Order of ${items.length} items from Greenleaf`,
         };
 
         // Create a hidden form and submit it

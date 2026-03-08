@@ -15,7 +15,7 @@ export default function AboutPage() {
 
                 <div className={`prose prose-lg mx-auto ${theme === 'royal' ? 'text-white/80' : 'text-nude-900/80'}`}>
                     <p className="mb-6 text-xl leading-relaxed">
-                        Welcome to MLM Co., where luxury meets opportunity. We believe that true elegance is not just about what you wear, but how you live.
+                        Welcome to Greenleaf, where luxury meets opportunity. We believe that true elegance is not just about what you wear, but how you live.
                     </p>
                     <p className="mb-6">
                         Founded on the principles of exclusivity and empowerment, our diverse range of premium perfumes is designed to captivate and inspire. Each scent is a masterpiece, crafted with the finest ingredients to ensure a lasting impression.

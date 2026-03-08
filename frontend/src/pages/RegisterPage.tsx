@@ -69,7 +69,7 @@ export default function RegisterPage() {
                     <p className="opacity-60 text-sm">
                         {isReseller
                             ? 'Join our exclusive network of official resellers'
-                            : 'Join the MLM Co. exclusive network'}
+                            : 'Join the Greenleaf exclusive network'}
                     </p>
                 </div>
 

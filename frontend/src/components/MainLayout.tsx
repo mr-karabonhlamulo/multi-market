@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useCart } from '../contexts/CartContext';
 import { Link, Outlet } from 'react-router-dom';
-import { ShoppingBag, Sun, Moon, Menu, X } from 'lucide-react';
+import { Sun, Moon, ShoppingBag, Menu, X, Leaf } from 'lucide-react';
 
 export default function MainLayout() {
     const { theme, toggleTheme } = useTheme();
@@ -19,8 +19,9 @@ export default function MainLayout() {
                 } backdrop-blur-md`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
-                        <Link to="/" className="text-2xl font-serif font-bold tracking-tighter z-50 relative">
-                            MLM <span className={theme === 'royal' ? 'text-royal-accent' : 'text-nude-400'}>Co.</span>
+                        <Link to="/" className="text-2xl font-serif font-bold tracking-tight z-50 relative flex items-center group">
+                            <Leaf className={`mr-1 transition-transform group-hover:scale-110 ${theme === 'royal' ? 'text-royal-accent' : 'text-nude-400'}`} size={24} />
+                            GRN<span className={theme === 'royal' ? 'text-royal-accent' : 'text-nude-400'}>!</span>
                         </Link>
 
                         {/* Desktop Menu */}

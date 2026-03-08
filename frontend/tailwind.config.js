@@ -7,12 +7,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Royal Dark Mode
+        // Royal Dark Mode (Now Greenleaf Dark)
         royal: {
-          900: '#0f172a', // Midnight blue
-          800: '#1e293b',
-          700: '#334155',
-          accent: '#6366f1', // Indigo glowing accent
+          900: '#022c22', // Dark teal-green
+          800: '#064e3b',
+          700: '#065f46',
+          accent: '#10b981', // Emerald green glowing accent
         },
         // Comfort Nude Mode
         nude: {
@@ -23,9 +23,22 @@ export default {
           400: '#a8a29e',
           900: '#44403c', // Warm dark
         },
+        // Override indigo to green/teal for Greenleaf brand
+        indigo: {
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6', // Teal
+          600: '#0d9488',
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
+        },
         glass: {
-            white: 'rgba(255, 255, 255, 0.1)',
-            black: 'rgba(0, 0, 0, 0.3)',
+          white: 'rgba(255, 255, 255, 0.1)',
+          black: 'rgba(0, 0, 0, 0.3)',
         }
       },
       fontFamily: {

@@ -6,10 +6,10 @@ export default function ContactPage() {
     const { theme } = useTheme();
 
     const socialPosts = [
-        { id: 1, platform: 'instagram', content: 'New Summer Collection dropping soon! 🌸 #MLMCo #Luxury', likes: '2.5k', icon: Instagram },
+        { id: 1, platform: 'instagram', content: 'New Summer Collection dropping soon! 🌸 #Greenleaf #Luxury', likes: '2.5k', icon: Instagram },
         { id: 2, platform: 'facebook', content: 'Join our exclusive partner network today. DM for details.', likes: '1.2k', icon: Facebook },
         { id: 3, platform: 'twitter', content: 'Elegance is an attitude. What is your signature scent?', likes: '850', icon: Twitter },
-        { id: 4, platform: 'linkedin', content: 'Proud to announce our record-breaking quarterly growth. #Business #MLM', likes: '5.4k', icon: Linkedin },
+        { id: 4, platform: 'linkedin', content: 'Proud to announce our record-breaking quarterly growth. #Business #Greenleaf', likes: '5.4k', icon: Linkedin },
         { id: 5, platform: 'instagram', content: 'Behind the scenes at our latest photoshoot in Paris. 📸', likes: '3.1k', icon: Instagram },
         { id: 6, platform: 'facebook', content: 'Customer Appreciation Month! Enjoy 20% off all orders.', likes: '4.2k', icon: Facebook },
     ];
