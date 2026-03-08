@@ -36,13 +36,28 @@ export default function RegisterPage() {
             return;
         }
 
-        // Mock Registration Logic
-        console.log(`Registering ${isReseller ? 'RESELLER' : 'USER'}:`, formData);
+        // Real Registration Logic
+        try {
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: formData.email,
+                    password: formData.password,
+                    full_name: `${formData.firstName} ${formData.lastName}`,
+                    referrer_id: isReseller ? 'direct' : null
+                })
+            });
 
-        // Simulate API call
-        setTimeout(() => {
-            // For now, we just log them in with the new credentials (mock)
-            login(formData.email, formData.password);
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert(data.error || 'Registration failed');
+                return;
+            }
+
+            // Automatically log in after registration
+            await login(formData.email, formData.password);
 
             if (isReseller) {
                 alert("Reseller Application Submitted for Review!");
@@ -50,7 +65,10 @@ export default function RegisterPage() {
             } else {
                 navigate('/');
             }
-        }, 1000);
+        } catch (err) {
+            console.error('Registration error:', err);
+            alert('Network error. Please try again.');
+        }
     };
 
     const inputClasses = `w-full pl-12 pr-4 py-3 rounded-xl border outline-none transition ${theme === 'royal'
